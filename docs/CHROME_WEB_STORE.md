@@ -2,6 +2,12 @@
 
 本ドキュメントは、Google の要件は**随時変更**されるため、申請時は [Chrome Web Store Developer Program Policies](https://developer.chrome.com/docs/webstore/program-policies) およびダッシュボードの案内を必ず確認してください。
 
+## 申請フォーム用の文案（ホスト権限・リモートコード）
+
+ストアの審査画面で「ホスト権限が必要な理由」「リモートコードの使用」などを問われたときは、次を参照してください。
+
+- **`store-assets/CHROME_WEB_STORE_PERMISSIONS.md`**（貼り付け用の日本語・短縮版・英語）
+
 ## 1. 事前準備
 
 1. [Google での開発者アカウント登録](https://chrome.google.com/webstore/devconsole)（手数料が発生する場合があります）。
