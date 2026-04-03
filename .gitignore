@@ -5,3 +5,6 @@ Thumbs.db
 .idea/
 .vscode/
 *.log
+
+# 未加工のストア用スクリーンショット（任意でプライバシー保護のため除外）
+store-assets/screenshots/source-screenshot.png
