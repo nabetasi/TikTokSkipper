@@ -2,11 +2,11 @@
 
 ## Short description
 
-Skip or rewind the TikTok web video you are watching by 1 second.
+Seek the TikTok web video you are watching by ±0.5s or ±1s.
 
 ## Detailed description
 
-On TikTok (tiktok.com), videos change as you scroll. This extension estimates **the video currently playing near the center of the viewport** and lets you jump **forward by 1 second** or **backward by 1 second** using two buttons on the right side of the screen.
+On TikTok (tiktok.com), videos change as you scroll. This extension estimates **the video currently playing near the center of the viewport** and lets you seek **±1 second** or **±0.5 seconds** using four buttons on the right side of the screen.
 
 **Notes**
 
@@ -15,4 +15,4 @@ On TikTok (tiktok.com), videos change as you scroll. This extension estimates **
 
 ## Single purpose
 
-Provide buttons to move the current TikTok web video playback position by one second forward or backward.
+Provide buttons to move the current TikTok web video playback position by 0.5 or 1 second forward or backward.

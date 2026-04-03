@@ -1,6 +1,6 @@
 # TikTok Skipper
 
-Chrome 向け拡張機能（Manifest V3）。TikTok Web（`tiktok.com`）で、**いま見ている動画**に対して **1秒戻す / 1秒送る** ができます。操作ボタンは画面右側に固定表示されます。
+Chrome 向け拡張機能（Manifest V3）。TikTok Web（`tiktok.com`）で、**いま見ている動画**に対して **−1s / +1s / −0.5s / +0.5s** でシークできます（UI表記は英語の `s`）。操作ボタンは画面右側に固定表示されます。
 
 ## 開発計画
 
@@ -24,7 +24,7 @@ python3 scripts/generate_icons.py
 ./scripts/package-extension.sh
 ```
 
-生成物：`build/tiktok-skipper-chrome-store-v1.0.1.zip`
+生成物：`build/tiktok-skipper-chrome-store-v1.0.2.zip`
 
 ストア申請手順・文案・プライバシー方針：`docs/CHROME_WEB_STORE.md` と `store-assets/` を参照してください。
 

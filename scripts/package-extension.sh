@@ -2,7 +2,7 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT_DIR="${ROOT}/build"
-ZIP_NAME="tiktok-skipper-chrome-store-v1.0.1.zip"
+ZIP_NAME="tiktok-skipper-chrome-store-v1.0.2.zip"
 mkdir -p "${OUT_DIR}"
 (
   cd "${ROOT}"

@@ -1,7 +1,6 @@
 (() => {
   "use strict";
 
-  const STEP = 1;
   const ROOT_ID = "tiktok-skipper-root";
   const SCAN_DEBOUNCE_MS = 40;
 
@@ -159,18 +158,6 @@
     root.setAttribute("role", "toolbar");
     root.setAttribute("aria-label", "TikTok Skipper");
 
-    const back = document.createElement("button");
-    back.type = "button";
-    back.className = "tiktok-skipper-btn";
-    back.textContent = "−1秒";
-    back.setAttribute("aria-label", "1秒戻す");
-
-    const fwd = document.createElement("button");
-    fwd.type = "button";
-    fwd.className = "tiktok-skipper-btn";
-    fwd.textContent = "+1秒";
-    fwd.setAttribute("aria-label", "1秒送る");
-
     const toast = document.createElement("div");
     toast.className = "tiktok-skipper-toast";
     toast.setAttribute("aria-live", "polite");
@@ -185,19 +172,15 @@
       }, 1600);
     }
 
-    function blockPageGesture(ev) {
-      ev.stopPropagation();
-    }
-
     function seek(delta) {
       pickActiveVideo();
       const v = activeVideo;
       if (!v) {
-        showToast("操作できる動画が見つかりません。");
+        showToast("No video found.");
         return;
       }
       if (v.readyState < 1) {
-        showToast("動画の読み込みを待っています。");
+        showToast("Waiting for video to load.");
         return;
       }
       const d =
@@ -211,22 +194,50 @@
       try {
         v.currentTime = next;
       } catch {
-        showToast("シークできませんでした。");
+        showToast("Seek failed.");
       }
     }
 
-    [back, fwd].forEach((btn) => {
+    function makeSeekButton(label, ariaLabel, delta) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "tiktok-skipper-btn";
+      btn.textContent = label;
+      btn.setAttribute("aria-label", ariaLabel);
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
+        seek(delta);
       });
-      btn.addEventListener("pointerdown", blockPageGesture, true);
-    });
+      btn.addEventListener(
+        "pointerdown",
+        (ev) => {
+          ev.stopPropagation();
+        },
+        true
+      );
+      return btn;
+    }
 
-    back.addEventListener("click", () => seek(-STEP));
-    fwd.addEventListener("click", () => seek(STEP));
+    const row1 = document.createElement("div");
+    row1.className = "tiktok-skipper-row";
+    row1.appendChild(
+      makeSeekButton("−1s", "Seek back 1 second", -1)
+    );
+    row1.appendChild(
+      makeSeekButton("+1s", "Seek forward 1 second", 1)
+    );
 
-    root.appendChild(back);
-    root.appendChild(fwd);
+    const row2 = document.createElement("div");
+    row2.className = "tiktok-skipper-row";
+    row2.appendChild(
+      makeSeekButton("−0.5s", "Seek back 0.5 seconds", -0.5)
+    );
+    row2.appendChild(
+      makeSeekButton("+0.5s", "Seek forward 0.5 seconds", 0.5)
+    );
+
+    root.appendChild(row1);
+    root.appendChild(row2);
     document.documentElement.appendChild(root);
     document.documentElement.appendChild(toast);
 

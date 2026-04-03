@@ -5,7 +5,7 @@
 ## 1. 事前準備
 
 1. [Google での開発者アカウント登録](https://chrome.google.com/webstore/devconsole)（手数料が発生する場合があります）。
-2. 拡張機能 ZIP：`build/tiktok-skipper-chrome-store-v1.0.1.zip`（`scripts/package-extension.sh` で再生成）。
+2. 拡張機能 ZIP：`build/tiktok-skipper-chrome-store-v1.0.2.zip`（`scripts/package-extension.sh` で再生成）。
 3. **プライバシーポリシー**の公開 URL（HTTPS）。リポジトリの `store-assets/PRIVACY_POLICY.md` と同内容を GitHub Pages 等に掲載し、その URL をストアに登録するのが一般的です。
 
 ## 2. 申請時に入力する主な項目
@@ -22,7 +22,7 @@
 
 要件はストア UI 上の指定が正です。目安として `store-assets/SCREENSHOTS.md` にサイズと撮影手順を記載しています。
 
-- **スクリーンショット**：実際に `tiktok.com` で拡張機能を読み込み、右側の「−1秒」「+1秒」が写るものを用意する（第三者の肖像・著作物に注意）。
+- **スクリーンショット**：実際に `tiktok.com` で拡張機能を読み込み、右側の「−1s」「+1s」「−0.5s」「+0.5s」が写るものを用意する（第三者の肖像・著作物に注意）。
 - **アイコン**：リポジトリの `icons/`（128 / 48 / 16）を使用。
 
 ## 4. 審査で意識しやすい点
@@ -37,4 +37,4 @@
 ./scripts/package-extension.sh
 ```
 
-出力先：`build/tiktok-skipper-chrome-store-v1.0.1.zip`
+出力先：`build/tiktok-skipper-chrome-store-v1.0.2.zip`

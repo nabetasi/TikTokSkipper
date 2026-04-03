@@ -11,8 +11,15 @@
   pointer-events: auto;
 }
 
+.tiktok-skipper-row {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+}
+
 .tiktok-skipper-btn {
   min-width: 72px;
+  flex: 1 1 auto;
   padding: 8px 10px;
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 8px;
