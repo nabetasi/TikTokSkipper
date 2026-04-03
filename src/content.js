@@ -3,15 +3,46 @@
 
   const STEP = 1;
   const ROOT_ID = "tiktok-skipper-root";
+  const SCAN_DEBOUNCE_MS = 40;
 
   /** @type {HTMLVideoElement | null} */
   let activeVideo = null;
   /** @type {Map<Element, number>} */
   const intersectionRatio = new Map();
   let rafScheduled = false;
+  /** @type {number | null} */
+  let scanTimer = null;
+  /** @type {HTMLVideoElement[]} */
+  let cachedVideos = [];
 
   function clamp(n, min, max) {
     return Math.min(max, Math.max(min, n));
+  }
+
+  /**
+   * TikTok はプレイヤーを Shadow DOM に置くことがあるため、子孫と shadow root を走査する。
+   * @param {Node} node
+   * @param {HTMLVideoElement[]} out
+   */
+  function collectVideosDeep(node, out) {
+    if (!node) return;
+    if (node.nodeName === "VIDEO" && node instanceof HTMLVideoElement) {
+      out.push(node);
+    }
+    if (node instanceof Element && node.shadowRoot) {
+      collectVideosDeep(node.shadowRoot, out);
+    }
+    const children = node.childNodes;
+    for (let i = 0; i < children.length; i++) {
+      collectVideosDeep(children[i], out);
+    }
+  }
+
+  /** @returns {HTMLVideoElement[]} */
+  function getAllVideos() {
+    const out = [];
+    collectVideosDeep(document.documentElement, out);
+    return out;
   }
 
   function scoreVideo(video) {
@@ -47,17 +78,26 @@
   }
 
   function pickActiveVideo() {
-    const videos = document.querySelectorAll("video");
+    const videos =
+      cachedVideos.length > 0
+        ? cachedVideos
+        : getAllVideos();
     let best = null;
     let bestScore = -Infinity;
     videos.forEach((v) => {
+      if (!v.isConnected) return;
       const s = scoreVideo(v);
       if (s > bestScore) {
         bestScore = s;
         best = v;
+      } else if (s === bestScore && s > -1 && best != null) {
+        const tieBreak =
+          (intersectionRatio.get(v) ?? 0) -
+          (intersectionRatio.get(best) ?? 0);
+        if (tieBreak > 0) best = v;
       }
     });
-    activeVideo = bestScore > 0 ? best : null;
+    activeVideo = bestScore > -1 && best != null ? best : null;
   }
 
   function scheduleUpdate() {
@@ -93,12 +133,21 @@
   }
 
   function scanVideos() {
-    document.querySelectorAll("video").forEach(observeVideo);
+    cachedVideos = getAllVideos();
+    cachedVideos.forEach(observeVideo);
     scheduleUpdate();
   }
 
+  function scheduleScan() {
+    if (scanTimer != null) window.clearTimeout(scanTimer);
+    scanTimer = window.setTimeout(() => {
+      scanTimer = null;
+      scanVideos();
+    }, SCAN_DEBOUNCE_MS);
+  }
+
   const mutationObserver = new MutationObserver(() => {
-    scanVideos();
+    scheduleScan();
   });
 
   function ensureUi() {
@@ -136,11 +185,19 @@
       }, 1600);
     }
 
+    function blockPageGesture(ev) {
+      ev.stopPropagation();
+    }
+
     function seek(delta) {
       pickActiveVideo();
       const v = activeVideo;
       if (!v) {
         showToast("操作できる動画が見つかりません。");
+        return;
+      }
+      if (v.readyState < 1) {
+        showToast("動画の読み込みを待っています。");
         return;
       }
       const d =
@@ -157,6 +214,13 @@
         showToast("シークできませんでした。");
       }
     }
+
+    [back, fwd].forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+      btn.addEventListener("pointerdown", blockPageGesture, true);
+    });
 
     back.addEventListener("click", () => seek(-STEP));
     fwd.addEventListener("click", () => seek(STEP));
@@ -182,7 +246,7 @@
       capture: true,
     });
     window.setInterval(() => {
-      pickActiveVideo();
+      scanVideos();
     }, 700);
   }
 

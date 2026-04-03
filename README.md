@@ -24,7 +24,7 @@ python3 scripts/generate_icons.py
 ./scripts/package-extension.sh
 ```
 
-生成物：`build/tiktok-skipper-chrome-store-v1.0.0.zip`
+生成物：`build/tiktok-skipper-chrome-store-v1.0.1.zip`
 
 ストア申請手順・文案・プライバシー方針：`docs/CHROME_WEB_STORE.md` と `store-assets/` を参照してください。
 
