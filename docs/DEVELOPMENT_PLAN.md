@@ -34,13 +34,13 @@ TikTokSkipper/
 ├── src/
 │   ├── content.js      # 動画検出・シーク・UI
 │   └── content.css     # フローティング UI
-├── icons/              # 16 / 48 / 128（generate_icons.py で生成可能）
+├── icons/              # 16 / 48 / 128（generate_extension_assets.py）
 ├── docs/
 │   ├── DEVELOPMENT_PLAN.md
 │   └── CHROME_WEB_STORE.md
 ├── store-assets/       # ストア文案・プライバシー原稿・スクリーンショット手順
 ├── scripts/
-│   ├── generate_icons.py
+│   ├── generate_extension_assets.py
 │   └── package-extension.sh
 ├── build/              # package-extension.sh の出力（.gitignore）
 └── README.md

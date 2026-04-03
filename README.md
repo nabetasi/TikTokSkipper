@@ -12,11 +12,17 @@ Chrome 向け拡張機能（Manifest V3）。TikTok Web（`tiktok.com`）で、*
 2. 「デベロッパーモード」をオン  
 3. 「パッケージ化されていない拡張機能を読み込む」で、このフォルダ（`manifest.json` があるディレクトリ）を選択  
 
-## アイコン生成
+## アイコン・ストア用プロモーションタイルの生成
+
+[Pillow](https://python-pillow.org/) が必要です。
 
 ```bash
-python3 scripts/generate_icons.py
+python3 -m pip install -r scripts/requirements-assets.txt
+python3 scripts/generate_extension_assets.py
 ```
+
+- `icons/icon16.png` … `icon128.png`（拡張機能アイコン）
+- `store-assets/promotional-tile-small-440x280.png`（Chrome Web Store の「プロモーション タイル（小）」用 440×280）
 
 ## Chrome Web Store 用 ZIP
 
